@@ -1,41 +1,105 @@
+const { bus } = require("nodemon/lib/utils");
+
 // Iteration #1: Find the maximum
-function maxOfTwoNumbers() {}
+function maxOfTwoNumbers(number1, number2) {
+  if (number1 > number2) {
+    return number1;
+  } else {
+    return number2;
+  }
+}
 
 
 
 // Iteration #2: Find longest word
 const words = ['mystery', 'brother', 'aviator', 'crocodile', 'pearl', 'orchard', 'crackpot'];
 
-function findLongestWord() {}
+function findLongestWord(words) {
+  let longestWord = words[0];
+  if (words.length === 0) {
+    return null;
+  } else {
+    for (let i = 1; i < words.length; i++) {
+      if (words[i].length > longestWord.length) {
+        longestWord = words[i];
+      }
+    }
+    return longestWord;
+  }
+}
+
 
 
 
 // Iteration #3: Calculate the sum
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
 
-function sumNumbers() {}
+function sumNumbers(numbers) {
+  let sum = 0;
+
+  for (let i in numbers) {
+    sum += numbers[i];
+  }
+  return (sum);
+}
 
 
 
 // Iteration #3.1 Bonus:
-function sum() {}
+// In the iteration 3, you created a function that returns the sum of an array of numbers. But what if we wanted to know how much is the sum of the length of all of the words in an array? What if we wanted to add boolean values to the mix? We wouldn't be able to use the same function as above, or better saying, we would have to tweak it a little bit so that it can be reused no matter what is in the array that is passed as argument when function sumNumbers() is called.
+const mixedArr = [6, 12, 'miami', 1, true, 'barca', '200', 'lisboa', 8, 10, []];
 
+function sum(mixedArr) {
+  let sum = 0;
+  for (let i in mixedArr) {
+    if (typeof mixedArr[i] === 'number') {
+      sum += mixedArr[i];
+    } else if (typeof mixedArr[i] === 'string') {
+      sum += mixedArr[i].length;
+    } else if (typeof mixedArr[i] === 'boolean') {
+      if (mixedArr[i] === true) {
+        sum += 1;
+      }
+    } else if (typeof mixedArr[i] === 'object' || typeof mixedArr[i] === 'array') {
+      throw new Error("Unsupported data type sir or ma'am");
+    }
+  }
+  return sum;
+}
 
 
 // Iteration #4: Calculate the average
 // Level 1: Array of numbers
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 
-function averageNumbers() {}
+function averageNumbers(numbersAvg) {
+  if (numbersAvg.length === 0)
+    return null;
+  let sumNumbers = sum(numbersAvg);
+  return (sumNumbers / numbersAvg.length);
+}
 
 
 // Level 2: Array of strings
 const wordsArr = ['seat', 'correspond', 'linen', 'motif', 'hole', 'smell', 'smart', 'chaos', 'fuel', 'palace'];
 
-function averageWordLength() { }
+function averageWordLength(wordsArr) {
+  if (wordsArr.length === 0)
+    return null;
+  let sumCharacters = sum(wordsArr);
+  return (sumCharacters / wordsArr.length)
+}
 
-// Bonus - Iteration #4.1
-function avg() {}
+// Bonus - Iteration #4.3
+
+const mixedArr2 = [6, 12, 'miami', 1, true, 'barca', '200', 'lisboa', 8, 10];
+
+function avg(mixedArr2) {
+  if (mixedArr2.length === 0)
+    return null;
+  let sumMixed = sum(mixedArr2);
+  return (sumMixed / mixedArr2.length)
+}
 
 // Iteration #5: Unique arrays
 const wordsUnique = [
@@ -52,14 +116,35 @@ const wordsUnique = [
   'bring'
 ];
 
-function uniquifyArray() {}
+function uniquifyArray(wordsUnique) {
+  let uniqueWords = [];
+
+  if (wordsUnique.length === 0)
+    return null;
+  for (let i in wordsUnique) {
+    if (uniqueWords.indexOf(wordsUnique[i]) === -1) {
+
+      uniqueWords.push(wordsUnique[i])
+    }
+  }
+  return uniqueWords
+}
 
 
 
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
-function doesWordExist() {}
+function doesWordExist(wordsFind, wordToFind) {
+  if (wordsFind.length === 0)
+    return null;
+  for (let i of wordsFind) {
+    if (wordsFind.includes(wordToFind))
+      return true;
+    else
+      return false;
+  }
+}
 
 
 
@@ -78,11 +163,25 @@ const wordsCount = [
   'matter'
 ];
 
-function howManyTimes() {}
+function howManyTimes(wordsCount, wordToFindMultipleTimes) {
+  let counter = 0;
+
+  if (wordsCount.length === 0)
+    return 0;
+  for (let i = 0; i < wordsCount.length; i++) {
+    if (wordsCount[i].includes(wordToFindMultipleTimes)) {
+      counter = counter + 1;
+    }
+  }
+  return counter;
+}
+
+// console.log(howManyTimes(wordsCount, 'matter'))
 
 
 
-// Iteration #8: Bonus
+// Bonus 8: Unfinished, code is trash, my bad
+
 const matrix = [
   [8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8],
   [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 0],
@@ -106,7 +205,182 @@ const matrix = [
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
 
-function greatestProduct() {}
+const matrix2 = [
+  [1, 2, 3, 4, 5],
+  [1, 20, 3, 4, 5],
+  [1, 20, 3, 4, 5],
+  [1, 20, 3, 4, 5],
+  [1, 4, 3, 4, 5]
+];
+
+// Iteration #8: Bonus
+// function greatestProduct(matrix) {
+//   let result = 0;
+//   let productH = 0;
+//   let productV = 0;
+
+//   matrix.forEach(element => {
+//     for (let i = 0; i <= 4; i++) {
+//       console.log('element i is ', element[element.indexOf(element[i])])
+//       console.log('element i + 1 is ', element[element.indexOf(element[i])])
+//       let productVertical = element[i] * element[i + 1] * element[i + 2] * element[i + 3];
+//       if (productVertical > productV) {
+//         productV = productVertical;
+//       }
+//     }
+//     // console.log(`${element[0]} * ${element[1]} * ${element[2]} * ${element[3]} is ${element[0] * element[1] * element[2] * element[3]}`);
+//     // console.log(`${element.indexOf(element)} element is ${element[element.indexOf(Math.max(...element))]}`);
+//     // console.log(`${element[0]} * ${element[1]} * ${element[2]} * ${element[3]} is ${element[0] * element[1] * element[2] * element[3]}`);
+//     // console.log(`first element[] is ${element[element.indexOf(element2)]}`);
+//     element.forEach(element2 => {
+//       // console.log(`element2 is ${element2}`);
+//       // console.log(`element[] is ${element[element.indexOf(element2)]}`);
+//       // console.log(`Element 1:1 is ${element[1][1]}`);
+//       // console.log(`element[element.indexOf(${element2}) + 1] is ${element.indexOf(element2)}`);
+//       if (element2 * element[element.indexOf(element2) + 1] * element[element.indexOf(element2) + 2] * element[element.indexOf(element2) + 3] > productH) {
+//         productH = element2 * element[element.indexOf(element2) + 1] * element[element.indexOf(element2) + 2] * element[element.indexOf(element2) + 3];
+//       } else if (element2 * element[element.indexOf(element2) + 1] * element[element.indexOf(element2) + 2] > productH) {
+//         productH = element2 * element[element.indexOf(element2) + 1] * element[element.indexOf(element2) + 2];
+//       }
+//     }
+//     )
+
+//   })
+//   console.log('product H is', productH);
+//   console.log('product V is', productV);
+//   if (productH > productV) {
+//     result = productH;
+//     return (result)
+//   } else if (productV > productH) {
+//     result = productV;
+//     return (result)
+//   } else if (productV === productH) {
+//     result = productV;
+//     return (result)
+//   }
+// }
+
+// Given multiple arrays, find the greatest product of four adjacent numbers.
+// We consider adjacent any four numbers that are next to each other horizontally or vertically. 
+function greatestProduct(matrix) {
+  let result = 0;
+  let productH = 0;
+  let productV = 0;
+
+  matrix.forEach(element => {
+    for (let i = 0; i <= 5; i++) {
+      let productHorizontal = element[i] * element[i + 1] * element[i + 2] * element[i + 3];
+      if (productHorizontal > productH) {
+        productH = productHorizontal;
+      }
+    }
+    console.log(`product H is`, productH);
+    matrix.forEach(element2 => {
+      for (let i = 0; i <= 5; i++) {
+        console.log(`element2`, element2);
+        let productVertical = element2[i] * element2[i + 1] * element2[i + 2] * element2[i + 3];
+        if (productVertical > productV) {
+          productV = productVertical;
+        }
+      }
+      console.log(`product V is`, productV);
+    })
+  }
+  )
+}
+
+console.log(greatestProduct(matrix2));
+
+function greatestProductOfDiagonals(matrix) {
+  let product = 0;
+
+  matrix.forEach(element => {
+    element.forEach(element2 => {
+      // console.log(element.indexOf(element2) + 42);
+      // console.log(`Element length is ${element.length * 2 + 1}`);
+      console.log(`element[element.indexOf(element2) + 2] is ${element[element.indexOf(element2) + 1]}`);
+      console.log(`element2 is ${element2}`);
+      if (element2 * element[element.indexOf(element2) + 21] * element[element.indexOf(element2) + 42] * element[element.indexOf(element2) + element.length + 63] > product) {
+        product = element2 * element[element.indexOf(element2) + 21] * element[element.indexOf(element2) + element.length + 42] * element[element.indexOf(element2) + element.length + 63];
+      }
+    }
+    )
+  });
+  if (productH > productV) {
+    result = productH;
+    return (result)
+  } else if (productV > productH) {
+    result = productV;
+    return (result)
+  } else if (productV === productH) {
+    result = productV;
+    return (result)
+  }
+}
+
+// console.log(greatestProductOfDiagonals(matrix));
+
+// // function to find max product
+// function findMaxProduct(matrix) {
+//   let max = 0;
+//   let result = 0;
+
+//   // iterate the rows.
+//   let i = 1;
+//   for (let i = 0; i <= matrix[i].length - 1; i++) {
+//     // if (matrix[i].length === undefined)
+//     //   return 0;
+//     console.log(`Length of matrix ${i} is ${matrix[i].length}`);
+//     // iterate the columns.
+//     for (let j = 0; j < matrix[i][j].length; j++) {
+//       // check the maximum product
+//       // in Vertical row.
+//       if ((j - 3) >= 0) {
+//         result = matrix[i][j] * matrix[i][j - 1]
+//           * matrix[i][j - 2]
+//           * matrix[i][j - 3];
+//         if (max < result)
+//           max = result;
+//       }
+
+//       // check the maximum product
+//       // in vertical row.
+//       if ((i - 3) >= 0) {
+//         result = matrix[i][j] * matrix[i - 1][j]
+//           * matrix[i - 2][j]
+//           * matrix[i - 3][j];
+
+//         if (max < result)
+//           max = result;
+//       }
+
+//       // check the maximum product in
+//       // diagonal (going through down - right)
+//       if ((i - 3) >= 0 && (j - 3) >= 0) {
+//         result = matrix[i][j] * matrix[i - 1][j - 1]
+//           * matrix[i - 2][j - 2]
+//           * matrix[i - 3][j - 3];
+
+//         if (max < result)
+//           max = result;
+//       }
+
+//       // check the maximum product in
+//       // diagonal (going through up - right)
+//       if ((i - 3) >= 0 && (j - 1) <= 0) {
+//         result = matrix[i][j] * matrix[i - 1][j + 1]
+//           * matrix[i - 2][j + 2]
+//           * matrix[i - 3][j + 3];
+
+//         if (max < result)
+//           max = result;
+//       }
+//     }
+//   }
+
+//   return max;
+// }
+
 
 
 
